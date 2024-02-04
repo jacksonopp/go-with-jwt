@@ -23,6 +23,9 @@ func (s *Server) RegisterRoutes() http.Handler {
 
 	e.GET("/web", echo.WrapHandler(templ.Handler(web.HelloForm())))
 	e.POST("/hello", echo.WrapHandler(http.HandlerFunc(web.HelloWebHandler)))
+	e.GET("/ping", func(c echo.Context) error {
+		c.String(http.StatusOK, "pong")
+	})
 
 	// auth
 	ah := handlers.AuthHandler{}
