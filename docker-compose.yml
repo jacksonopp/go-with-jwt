@@ -1,4 +1,4 @@
-version: '3.8'
+version: '2.4'
 
 services:
   psql:
@@ -11,6 +11,7 @@ services:
       - "${DB_PORT}:5432"
     volumes:
       - psql_volume:/var/lib/postgresql/data
+    restart: unless-stopped
   app:
     build: .
     container_name: go_with_jwt
@@ -25,6 +26,7 @@ services:
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
       JWT_TOKEN: ${JWT_TOKEN}
+    restart: unless-stopped
 
 volumes:
   psql_volume:
