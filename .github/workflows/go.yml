@@ -33,6 +33,6 @@ jobs:
 
     - name: Commit and push
       run: |
-        git add myapp
+        git add main-linux
         git commit -m "Add compiled binary" || echo "No changes to commit"
         git push
