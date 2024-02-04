@@ -3,10 +3,12 @@ package server
 import (
 	"net/http"
 
+	"go-with-jwt/cmd/web"
+	"go-with-jwt/internal/handlers"
+
 	"github.com/a-h/templ"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"go-with-jwt/cmd/web"
 )
 
 func (s *Server) RegisterRoutes() http.Handler {
@@ -21,6 +23,12 @@ func (s *Server) RegisterRoutes() http.Handler {
 
 	e.GET("/web", echo.WrapHandler(templ.Handler(web.HelloForm())))
 	e.POST("/hello", echo.WrapHandler(http.HandlerFunc(web.HelloWebHandler)))
+
+	// auth
+	ah := handlers.AuthHandler{}
+	e.GET("/login", ah.HandleLoginShow)
+	e.POST("/login", ah.HandleLogin)
+	// e.GET("/refresh", s.handleRefreshToken)
 
 	return e
 }
