@@ -10,7 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Check out repo
+      uses: actions/checkout@v2
+      with:
+        ref: ${{ github.event.pull_request.head.ref }}
 
     - name: Set up Go
       uses: actions/setup-go@v2
@@ -20,11 +23,6 @@ jobs:
     - name: Build
       run: |
         go build -o main-linux cmd/api/main.go
-
-    - name: Check out the repo again
-      uses: actions/checkout@v2
-      with:
-        ref: ${{ github.event.pull_request.head.ref }}
 
     - name: Configure user details
       run: |
