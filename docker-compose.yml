@@ -11,6 +11,20 @@ services:
       - "${DB_PORT}:5432"
     volumes:
       - psql_volume:/var/lib/postgresql/data
+  app:
+    build: .
+    container_name: go_with_jwt
+    depends_on:
+      - psql
+    ports:
+      - 3000:3000
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_TOKEN: ${JWT_TOKEN}
 
 volumes:
   psql_volume:
