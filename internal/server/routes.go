@@ -13,7 +13,7 @@ import (
 
 func (s *Server) RegisterRoutes() http.Handler {
 	e := echo.New()
-	e.Use(middleware.Logger())
+	// e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
 	e.GET("/", s.HelloWorldHandler)
@@ -31,7 +31,8 @@ func (s *Server) RegisterRoutes() http.Handler {
 	ah := handlers.AuthHandler{}
 	e.GET("/login", ah.HandleLoginShow)
 	e.POST("/login", ah.HandleLogin)
-	// e.GET("/refresh", s.handleRefreshToken)
+	e.GET("/protected", ah.HandleProtectedRoute)
+	e.GET("/refresh", ah.HandleRefreshToken)
 
 	return e
 }
